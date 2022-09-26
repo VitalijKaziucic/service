@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+{% load mathfilters %}
+{% load static %}
+<div class="container jumbotron">
+    <h1>Užsakymas detaliai:</h1>
+    <br>
+    <h5><strong>Automobilio modelis:</strong> {{uzsakymas.vehicle_id.vehicle_id}}</h5>
+    <h5><strong>Valstybinis numeris:</strong> {{uzsakymas.vehicle_id.plate}}</h5>
+    <h5><strong>Savininkas:</strong> {{uzsakymas.vehicle_id.client}}</h5>
+    <h5><strong>Automobilio nuotrauka:</strong></h5>
+    <div class="container">
+        {% if uzsakymas.vehicle_id.image %}
+        <img src="{{ uzsakymas.vehicle_id.image.url }}" class="rounded mx-auto d-block w-25 p-3 rounded float-left"
+             alt="No Image">
+        {% else %}
+        <img src="{% static 'no_image.jpg' %}" class="rounded mx-auto d-block w-25 p-3">
+        {% endif %}
+    </div>
+
+</div>
+<div class="jumbotron">
+</div>
+
+{% if uzsakymas %}
+
+<div class="container jumbotron">
+    <h2>Užsakymo eilutės:</h2>
+    <table class="table">
+        <thead>
+
+        <tr>
+            <th scope="col">Paslaugos id</th>
+            <th scope="col">Paslaugos pavadinimas</th>
+            <th scope="col">Kiekis</th>
+            <th scope="col">Kaina</th>
+            <th scope="col">Viso</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for line in uzsakymas.lines.all %}
+        <tr>
+            <td>{{line.id}}</td>
+            <td>{{line.service_id.name}}</td>
+            <td>{{line.quantity}}</td>
+            <td>{{line.service_id.price}} Eur</td>
+            <td>{{line.quantity|mul:line.service_id.price}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {%else%}
+    <h1>{{"Užsakymo eilutės nesukurtos"}}</h1>
+    {%endif%}
+</div>
+{% endblock %}

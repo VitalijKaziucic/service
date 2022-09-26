@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load mathfilters %}
+
+{% block content %}
+
+<div class="container jumbotron">
+    <h1>Automobilis: {{order.vehicle_id}}</h1>
+<h1>Užsakymas detaliai:</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Užsakymo id</th>
+        <th scope="col">Paslaugos pavadinimas</th>
+        <th scope="col">Kiekis</th>
+        <th scope="col">Kaina</th>
+        <th scope="col">Viso</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% for line in order.lines.all %}
+    <tr>
+        <td>{{line.id}}</td>
+        <td>{{line.service_id.name}}</td>
+        <td>{{line.quantity}}</td>
+        <td>{{line.service_id.price}} Eur</td>
+        <td>{{line.quantity|mul:line.service_id.price}} <Eur></Eur></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}
+
+
+

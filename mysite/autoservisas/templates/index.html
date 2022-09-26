@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<div class="container jumbotron">
+    <h1>Autoservisas</h1>
+    <p>Sveiki atvykę</p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Paslaugų kiekis</th>
+            <th scope="col">Atlikti užsakymai</th>
+            <th scope="col">Automobilių kiekis</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            {% for num in data %}
+            <td>{{num}}</td>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

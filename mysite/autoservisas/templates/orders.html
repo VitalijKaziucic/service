@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+
+<div class="container jumbotron">
+    <h1>Automobilio {{vehicle}} užsakymai:</h1>
+    {% if vehicle.image %}
+    <h3>Automobilio nuotrauka:</h3>
+    <br>
+    <div class="container">
+        <img src="{{ vehicle.image.url }}" class="rounded mx-auto d-block w-25 p-3 rounded float-left" alt="No Image">
+        {% else %}
+        <img src="{% static 'no_image.jpg' %}" class="rounded mx-auto d-block w-25 p-3 rounded float-left">
+        {% endif %}
+    </div>
+</div>
+<div class="container jumbotron">
+
+</div>
+<div class="container jumbotron">
+    {% if not vehicle.orders.all %}
+    <h3>Užsakymų nerasta:</h3>
+    {% else %}
+    <h3>Užsakymai:</h3>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Užsakymo id</th>
+            <th scope="col">Užsakymo data</th>
+            <th scope="col">Statusas</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in vehicle.orders.all %}
+        <tr>
+            <td><a href="{% url 'order_lines' order.id %}">{{order.id}}</a></td>
+            <td>{{order.order_date}}</td>
+            {% if order.status == "s" %}
+            <td>Sukurtas</td>
+            {% elif order.status == "p" %}
+            <td>Priimtas</td>
+            {% elif order.status == "v" %}
+            <td>Vykdomas</td>
+            {% else %}
+            <td>Įvykdytas</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container jumbotron">
+    <h1>Automobiliai:</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Automobilio numeris</th>
+            <th scope="col">Automobilis</th>
+            <th scope="col">Savininkas</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for car in cars%}
+        <tr>
+            <td>{{car.id}}</td>
+            <td><a href="{% url 'car_orders' car.id %}">{{car.plate}}</a></td>
+            <td>{{car.vehicle_id}}</td>
+            <td>{{car.client}}</td>
+
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="container puslapiai">
+        <nav aria-label="...">
+            {% if cars.has_other_pages %}
+            <ul class="pagination pagination-m justify-content-end">
+                {% for i in cars.paginator.page_range %}
+                {% if cars.number == i %}
+                <li class="page-item">
+                    <a class="btn btn-danger" href="">{{i}}</a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="btn btn-outline-danger" href="?page={{i}}">{{i}}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+
+            </ul>
+            {% endif %}
+
+
+        </nav>
+
+    </div>
+</div>
+
+{% endblock %}

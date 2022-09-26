@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container jumbotron">
+
+
+    {% if uzsakymas_list %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Užsakymo id</th>
+            <th scope="col">Užsakymo data</th>
+            <th scope="col">Statusas</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in uzsakymas_list %}
+        <tr>
+            <td><a href="{{order.pk}}">{{order.id}}</a></td>
+            <td>{{order.order_date}}</td>
+            <td>{{order.get_status_display}}</td>
+
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+    {% else %}
+    <h1>{{ "Užsakymų nėra" }}</h1>
+    {% endif %}
+</div>
+{% endblock %}
